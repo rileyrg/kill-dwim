@@ -91,6 +91,7 @@ See
   ;;; code:
   (use-package emacs
     :init
+
     (add-to-list  'thing-at-point-provider-alist '(rgr/tap-kdwim . rgr/tap-kill-dwim))
 
     :config
@@ -98,24 +99,23 @@ See
       "`thing-at-point' candidates for killing")
 
     (defun rgr/tap-kill-dwim()
-      "if no region, loop through  `thing-at-point' symbols in `rgr/kill-dwim-tap-symbols' and return first hit"
-      (if (use-region-p)
-          (copy-region-as-kill (mark) (point))
-        (catch 'found
-          (mapcar (lambda(x)
-                    (let ((v (thing-at-point x)))
-                      (when v (throw 'found v)))) rgr/kill-dwim-tap-symbols))))
+      "loop through  `thing-at-point' symbols in `rgr/kill-dwim-tap-symbols' and return first hit"
+      (catch 'found
+        (mapcar (lambda(x)
+                  (let ((v (thing-at-point x)))
+                    (when v (throw 'found v)))) rgr/kill-dwim-tap-symbols)))
 
     (defun rgr/kill-dwim ()
       "work out what to pick up from point and stick in the kill ring. region has priority."
       (interactive)
-      (let ((s (thing-at-point 'rgr/tap-kdwim)))
-        (if current-prefix-arg
-            (setq s (read-string "text:" s)))
-        (when s
-          (message "%s" s)
-          (kill-new s))
-        s)))
+      (if (use-region-p)
+          (copy-region-as-kill (mark) (point))
+        (let ((s (thing-at-point 'rgr/tap-kdwim)))
+          (if current-prefix-arg
+              (setq s (read-string "text:" s)))
+          (when s
+            (kill-new s))))
+      (message "%s" (current-kill 0 t))))
 
   (provide 'rgr-kill-dwim)
   ;;; rgr-kill-dwim.el ends here
