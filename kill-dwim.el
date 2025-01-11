@@ -1,16 +1,16 @@
-;;; rgr-kill-dwim.el --- A minor-mode display docstrings for the symbol at point
+;;; kill-dwim.el --- A minor-mode display docstrings for the symbol at point
 ;;
-;; maintained in rgr-kill-dwim.org
+;; maintained in kill-dwim.org
 ;;
 ;; Copyright (C) 2010-2024 rileyrg
 ;;
 ;; Author: rileyrg <rileyrg@gmx.de>
 ;; Created: 22 April 2021
 ;; Keywords: internal lisp docs help maint tools
-;; Version : 1.0
+;; Version : 1.1
 ;; Package-Requires: ((emacs "25.1")
 ;; Optional :
-;; URL: git@github.com/rileyrg/rgr-kill-dwim.git
+;; URL: git@github.com/rileyrg/kill-dwim.git
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -29,46 +29,46 @@
 
 ;;; commentary:
 ;;
-;; bind a key to rgr/kill-dwim
+;; bind a key to kill-dwim
 ;;
 ;; Usage example:
 
-;;       (use-package rgr-kill-dwim
-;;       :straight (rgr-kill-dwim :type git :host github :repo "rileyrg/rgr-kill-dwim" )
+;;       (use-package kill-dwim
+;;       :straight (kill-dwim :type git :host github :repo "rileyrg/kill-dwim" )
 ;;       :bind
-;;       ("M-w" . rgr/kill-dwim))
+;;       ("M-w" . kill-dwim))
 ;;
 ;; customization:
-;;   see `rgr/kill-dwim-tap-symbols'
+;;   see `kill-dwim-tap-symbols'
 ;;
 ;;; code:
 (use-package emacs
   :init
 
-  (add-to-list  'thing-at-point-provider-alist '(rgr/tap-kdwim . rgr/tap-kill-dwim))
+  (add-to-list  'thing-at-point-provider-alist '(tap-kdwim . tap-kill-dwim))
 
   :config
-  (defcustom rgr/kill-dwim-tap-symbols '(url filename email symbol sexp word line)
+  (defcustom kill-dwim-tap-symbols '(url filename email symbol sexp word line)
     "`thing-at-point' candidates for killing")
 
-  (defun rgr/tap-kill-dwim()
-    "loop through  `thing-at-point' symbols in `rgr/kill-dwim-tap-symbols' and return first hit"
+  (defun tap-kill-dwim()
+    "loop through  `thing-at-point' symbols in `kill-dwim-tap-symbols' and return first hit"
     (catch 'found
       (mapcar (lambda(x)
                 (let ((v (thing-at-point x)))
-                  (when v (throw 'found v)))) rgr/kill-dwim-tap-symbols)))
+                  (when v (throw 'found v)))) kill-dwim-tap-symbols)))
 
-  (defun rgr/kill-dwim ()
+  (defun kill-dwim ()
     "work out what to pick up from point and stick in the kill ring. region has priority."
     (interactive)
     (if (use-region-p)
         (copy-region-as-kill (mark) (point))
-      (let ((s (thing-at-point 'rgr/tap-kdwim)))
+      (let ((s (thing-at-point 'tap-kdwim)))
         (if current-prefix-arg
             (setq s (read-string "text:" s)))
         (when s
           (kill-new s))))
     (message "%s" (current-kill 0 t))))
 
-(provide 'rgr-kill-dwim)
-;;; rgr-kill-dwim.el ends here
+(provide 'kill-dwim)
+;;; kill-dwim.el ends here

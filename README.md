@@ -1,49 +1,49 @@
 
 # Table of Contents
 
--   [Introduction](#org038a8b7)
--   [Installation](#org6a80087)
-    -   [use-package](#orgd717e4d)
-    -   [customisation](#org75d31c1)
--   [rgr-kill-dwim.el](#org03c9b79)
+-   [Introduction](#orgf2d30e2)
+-   [Installation](#org38ff293)
+    -   [use-package](#orgd0888a5)
+    -   [customisation](#org4afd9ac)
+-   [kill-dwim.el](#orgf3188a5)
 
 
 
-<a id="org038a8b7"></a>
+<a id="orgf2d30e2"></a>
 
 # Introduction
 
-Package  [rgr-kill-dwim](./rgr-kill-dwim.el) uses thing-at-point "things" to provide a more convenient "do what I mean" "kill/copy" of text at point.
+Package  [kill-dwim](./rgr-kill-dwim.el) uses thing-at-point "things" to provide a more convenient "do what I mean" "kill/copy" of text at point.
 
 
-<a id="org6a80087"></a>
+<a id="org38ff293"></a>
 
 # Installation
 
 
-<a id="orgd717e4d"></a>
+<a id="orgd0888a5"></a>
 
 ## use-package
 
-    (use-package rgr-kill-dwim
-      :straight (rgr-kill-dwim :type git :host github :repo "rileyrg/rgr-kill-dwim" )
+    (use-package kill-dwim
+      :straight (kill-dwim :type git :host github :repo "rileyrg/kill-dwim" )
       :bind
-      ("M-w" . rgr/kill-dwim))
+      ("M-w" . kill-dwim))
 
 
-<a id="org75d31c1"></a>
+<a id="org4afd9ac"></a>
 
 ## customisation
 
 See
 
-    (defcustom rgr/kill-dwim-tap-symbols '(url filename email symbol sexp word line)
+    (defcustom kill-dwim-tap-symbols '(url filename email symbol sexp word line)
     "`thing-at-point' candidates for killing")
 
 
-<a id="org03c9b79"></a>
+<a id="orgf3188a5"></a>
 
-# rgr-kill-dwim.el
+# kill-dwim.el
 
-link: [rgr-kill-dwim.el](rgr-kill-dwim.el)
+link: [kill-dwim.el](rgr-kill-dwim.el)
 
