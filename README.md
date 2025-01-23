@@ -1,27 +1,27 @@
 
 # Table of Contents
 
--   [Introduction](#orgf2d30e2)
--   [Installation](#org38ff293)
-    -   [use-package](#orgd0888a5)
-    -   [customisation](#org4afd9ac)
--   [kill-dwim.el](#orgf3188a5)
+-   [Introduction](#org6075e99)
+-   [Installation](#org1b9eb39)
+    -   [use-package](#org26ef13e)
+    -   [customisation](#org114258d)
+-   [kill-dwim.el](#org591f763)
 
 
 
-<a id="orgf2d30e2"></a>
+<a id="org6075e99"></a>
 
 # Introduction
 
 Package  [kill-dwim](./rgr-kill-dwim.el) uses thing-at-point "things" to provide a more convenient "do what I mean" "kill/copy" of text at point.
 
 
-<a id="org38ff293"></a>
+<a id="org1b9eb39"></a>
 
 # Installation
 
 
-<a id="orgd0888a5"></a>
+<a id="org26ef13e"></a>
 
 ## use-package
 
@@ -31,7 +31,7 @@ Package  [kill-dwim](./rgr-kill-dwim.el) uses thing-at-point "things" to provide
       ("M-w" . kill-dwim))
 
 
-<a id="org4afd9ac"></a>
+<a id="org114258d"></a>
 
 ## customisation
 
@@ -41,7 +41,7 @@ See
     "`thing-at-point' candidates for killing")
 
 
-<a id="orgf3188a5"></a>
+<a id="org591f763"></a>
 
 # kill-dwim.el
 

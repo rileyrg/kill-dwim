@@ -11,21 +11,6 @@
 ;; Package-Requires: ((emacs "25.1")
 ;; Optional :
 ;; URL: git@github.com/rileyrg/kill-dwim.git
-;;
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-;;;
 
 ;;; commentary:
 ;;
@@ -42,33 +27,34 @@
 ;;   see `kill-dwim-tap-symbols'
 ;;
 ;;; code:
-(use-package emacs
-  :init
 
-  (add-to-list  'thing-at-point-provider-alist '(tap-kdwim . tap-kill-dwim))
+(require 'thingatpt)
 
-  :config
-  (defcustom kill-dwim-tap-symbols '(url filename email symbol sexp word line)
-    "`thing-at-point' candidates for killing")
+(add-to-list  'thing-at-point-provider-alist '(tap-kdwim . tap-kill-dwim))
 
-  (defun tap-kill-dwim()
-    "loop through  `thing-at-point' symbols in `kill-dwim-tap-symbols' and return first hit"
-    (catch 'found
-      (mapcar (lambda(x)
-                (let ((v (thing-at-point x)))
-                  (when v (throw 'found v)))) kill-dwim-tap-symbols)))
+(defcustom kill-dwim-tap-symbols '(url filename email symbol sexp word line)
+  "`thing-at-point' candidates for killing")
 
-  (defun kill-dwim ()
-    "work out what to pick up from point and stick in the kill ring. region has priority."
-    (interactive)
-    (if (use-region-p)
-        (copy-region-as-kill (mark) (point))
-      (let ((s (thing-at-point 'tap-kdwim)))
-        (if current-prefix-arg
-            (setq s (read-string "text:" s)))
-        (when s
-          (kill-new s))))
-    (message "%s" (current-kill 0 t))))
+(defun tap-kill-dwim()
+  "loop through  `thing-at-point' symbols in `kill-dwim-tap-symbols' and return first hit"
+  (catch 'found
+    (mapcar (lambda(x)
+              (let ((v (thing-at-point x)))
+                (when v (throw 'found v))))
+            kill-dwim-tap-symbols)))
+
+;;;###autoload
+(defun kill-dwim ()
+  "work out what to pick up from point and stick in the kill ring. region has priority."
+  (interactive)
+  (if (use-region-p)
+      (copy-region-as-kill (mark) (point))
+    (let ((s (thing-at-point 'tap-kdwim)))
+      (if current-prefix-arg
+          (setq s (read-string "text:" s)))
+      (when s
+        (kill-new s))))
+  (message "%s" (current-kill 0 t)))
 
 (provide 'kill-dwim)
 ;;; kill-dwim.el ends here
